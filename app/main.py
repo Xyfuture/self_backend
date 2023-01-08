@@ -22,6 +22,7 @@ async def register_dispatcher_listener():
 
     for dispatcher in dispatcher_list:
         asyncio.create_task(dispatcher.wait_worker_response())
+
 origins= [
     "http://localhost:3000",
     "http://localhost:8080",
@@ -31,9 +32,6 @@ origins= [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    # allow_credentials=True,
-    # allow_methods=["*"],
-    # allow_headers=["*"],
 )
 
 app.include_router(inpaint.inpaint_router)

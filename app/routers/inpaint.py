@@ -19,9 +19,21 @@ inpaint_dispatcher_config = DispatcherConfig(
     ack_group_name="master"
 )
 
+# 配置redis使用，不实际应用
+deblur_dispatcher_config = DispatcherConfig(
+    worker_name = "Deblur",
+    worker_stream_key= "Deblur_worker",
+    worker_group_name = "worker",
+    ack_stream_key = "Deblur_finish_ack",
+    ack_group_name = "master"
+)
+
 inpaint_router = APIRouter()
 inpaint_dispatcher = Dispatcher(conn, conn, conn, inpaint_dispatcher_config)
 dispatcher_list.append(inpaint_dispatcher)
+
+deblur_dispatcher = Dispatcher(conn, conn, conn,deblur_dispatcher_config)
+dispatcher_list.append(deblur_dispatcher)
 
 
 @inpaint_router.post('/upload')
